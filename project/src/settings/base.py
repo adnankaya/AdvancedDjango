@@ -24,6 +24,7 @@ DEFAULT_APPS = [
 ]
 
 THRID_PARTY_APPS = [
+    'django_extensions',
     'rest_framework',
 ]
 
