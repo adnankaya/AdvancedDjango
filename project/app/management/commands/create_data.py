@@ -27,7 +27,7 @@ class Command(BaseCommand):
     @staticmethod
     def get_random_books():
         all_books = Book.objects.values_list('id', flat=True)
-        return random.sample(list(all_books), random.randint(1, all_books.count()))
+        return random.sample(list(all_books), random.randint(1, 10))
 
     @staticmethod
     def get_random_publisher():
@@ -45,17 +45,17 @@ class Command(BaseCommand):
 
         with transaction.atomic():
             # Create Authors
-            for i in range(1, 11):
+            for i in range(1, 101):
                 Author.objects.create(
                     name=f'Author{i}', age=random.randint(30, 90))
 
             # Create Publishers
-            for i in range(1, 11):
+            for i in range(1, 101):
                 Publisher.objects.create(name=f'Publisher{i}')
 
             # Create Books
             book_start = 1
-            book_end = 101
+            book_end = 1001
             for i in range(book_start, book_end):
                 book = Book(name=f'Book{i}',
                             pages=random.randint(150, 450),
@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 book.authors.add(*self.get_random_authors())
 
             # Create Stores
-            for i in range(1, 11):
+            for i in range(1, 101):
                 store = Store(name=f'Store{i}')
                 store.save()
                 store.books.add(*self.get_random_books())
