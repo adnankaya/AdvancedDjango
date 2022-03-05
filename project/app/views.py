@@ -24,14 +24,14 @@ class AuthorViewset(BaseViewset):
     serializer_class = AuthorSerializer
 
     def get_queryset(self):
-        return Author.objects.all()
+        return Author.objects.all().order_by('-pk')
 
 
 class PublisherViewset(BaseViewset):
     serializer_class = PublisherSerializer
 
     def get_queryset(self):
-        return Publisher.objects.all()
+        return Publisher.objects.all().order_by('-pk')
 
 
 class BookViewset(MultiSerializerViewSetMixin, BaseViewset):
