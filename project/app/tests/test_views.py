@@ -105,6 +105,25 @@ class PublisherViewsetTestCase(BaseTestCase):
         self.assertEqual(res_data.get('name'), publisher_name)
 
 
+class SearchBookViewsetTestCase(BaseTestCase):
+
+    def setUp(self) -> None:
+        super().setUp()
+        CreateDataCommand.create_authors()
+        CreateDataCommand.create_publishers()
+        CreateDataCommand.create_books(1, 101)
+
+    def test_search_books_by_name(self):
+        queries = ['Book1', 'Took1', 'Author1',
+                   'Buthur1', 'Publisher1', 'Xoblisher1']
+        for query in queries:
+            endpoint = f'{self.url_api_prefix}search-books/{query}/'
+            res = self.client.get(endpoint)
+            self.assertEqual(res.status_code, status.HTTP_200_OK)
+            res_data = res.json()
+            self.assertTrue(len(res_data.get('results')) > 0)
+
+
 class BookViewsetTestCase(BaseTestCase):
 
     def setUp(self) -> None:

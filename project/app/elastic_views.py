@@ -2,9 +2,9 @@ import abc
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.views import APIView
 from rest_framework import status, response
-from elasticsearch_dsl import Q
+from elasticsearch_dsl import Q, Nested
 # internals
-from app.serializers import BookDetailedSerializer, BookSearchSerializer, BookSerializer
+from app.serializers import BookSearchSerializer
 from app.documents import BookDocument
 
 
@@ -39,12 +39,11 @@ class SearchBooks(PaginatedElasticSearchAPIView):
     document_class = BookDocument
 
     def generate_q_expression(self, query):
-        return Q(
-            'multi_match', 
-            query=query, 
-            fields=[
-                'name', 'authors', 'publisher',
-
-            ], 
-            fuzziness='auto',
-        )
+        q_name = Q('multi_match', query=query,
+                   fields=['name'], fuzziness='auto')
+        q_publisher_name = Q('multi_match', query=query,
+                             fields=['publisher.name'], fuzziness='auto')
+        q_author_name = Q('multi_match', query=query,
+                          fields=['authors.name'], fuzziness='auto')
+        qs = q_name | q_publisher_name | q_author_name
+        return qs
