@@ -24,6 +24,11 @@ class BookSerializer(serializers.ModelSerializer):
                   'pubdate',
                   )
 
+class BookSearchSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=300)
+    authors = AuthorSerializer(many=True)
+    publisher = PublisherSerializer(many=False)
+
 
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:

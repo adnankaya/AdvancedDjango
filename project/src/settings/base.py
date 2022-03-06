@@ -26,6 +26,7 @@ DEFAULT_APPS = [
 THRID_PARTY_APPS = [
     'django_extensions',
     'rest_framework',
+    'django_elasticsearch_dsl',
 ]
 
 PROJECT_APPS = [
@@ -86,3 +87,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+}
