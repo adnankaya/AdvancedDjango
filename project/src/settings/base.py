@@ -27,6 +27,7 @@ THRID_PARTY_APPS = [
     'django_extensions',
     'rest_framework',
     'django_elasticsearch_dsl',
+    'django_celery_beat',
 ]
 
 PROJECT_APPS = [
@@ -97,3 +98,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10
 }
+
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
